@@ -64,12 +64,16 @@ const modules = {
 const projectConfig = {
   jwtSecret: process.env.JWT_SECRET,
   cookieSecret: process.env.COOKIE_SECRET,
-  database_database: "./medusa-db.sql",
-  database_type: DATABASE_TYPE,
+  // database_database: "./medusa-db.sql",
+  database_type: "postgres",
   store_cors: STORE_CORS,
   admin_cors: ADMIN_CORS,
   // Uncomment the following lines to enable REDIS
-  redis_url: REDIS_URL
+  redis_url: REDIS_URL,
+  database_extra:
+      process.env.NODE_ENV !== "development"
+        ? { ssl: { rejectUnauthorized: false } }
+        : {},
 }
 
 if (DATABASE_URL && DATABASE_TYPE === "postgres") {
